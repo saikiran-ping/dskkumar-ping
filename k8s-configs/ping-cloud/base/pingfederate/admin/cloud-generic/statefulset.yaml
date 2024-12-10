@@ -158,6 +158,27 @@ spec:
             name: pingfederate-admin-environment-variables
         - configMapRef:
             name: pingcommon-environment-variables
+      - name: pingfederate-perpetual-license
+        image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
+        imagePullPolicy: Always
+        command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]
+        env:
+          - name: PRODUCT_LICENSE_NAME
+            value: "pingfederate"
+          - name: LICENSE_EMPTY_DIR_PATH
+            value: "/opt/license"
+        envFrom:
+            - configMapRef:
+                name: pingfederate-admin-environment-variables
+        securityContext:
+            runAsGroup: 9999
+            runAsNonRoot: true
+            runAsUser: 9031
+            allowPrivilegeEscalation: false
+        volumeMounts:
+            - name: pingfederate-init
+              mountPath: /opt/in/perpetual_license.py
+              subPath: perpetual_license.py
       containers:
       - name: pingfederate-admin
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
