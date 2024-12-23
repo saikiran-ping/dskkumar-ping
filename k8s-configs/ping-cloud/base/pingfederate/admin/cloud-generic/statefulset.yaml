@@ -176,9 +176,11 @@ spec:
             runAsUser: 9031
             allowPrivilegeEscalation: false
         volumeMounts:
-            - name: pingfederate-init
-              mountPath: /opt/in/perpetual_license.py
-              subPath: perpetual_license.py
+        - name: pingfederate-init
+          mountPath: /opt/in/perpetual_license.py
+          subPath: perpetual_license.py
+        - name: license-dir
+          mountPath: /opt/license
       containers:
       - name: pingfederate-admin
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
@@ -291,6 +293,8 @@ spec:
           subPath: solutions_artifacts
         - mountPath: /etc/podinfo
           name: podinfo
+        - name: license-dir
+          mountPath: /opt/license
         readinessProbe:
           exec:
             command: [ /opt/staging/hooks/85-pf-admin-readiness.sh ]
@@ -335,6 +339,8 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
+        emptyDir: {}
+      - name: license-dir
         emptyDir: {}
       - name: pingfederate-init
         configMap:
