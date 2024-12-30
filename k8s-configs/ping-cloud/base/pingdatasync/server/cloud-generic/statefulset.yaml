@@ -114,6 +114,8 @@ spec:
           - name: pingdatasync-init
             mountPath: /opt/in/perpetual_license.py
             subPath: perpetual_license.py
+          - name: license-dir
+            mountPath: /opt/license
       containers:
       - name: pingdatasync
         securityContext:
@@ -228,12 +230,16 @@ spec:
           - name: pingdatasync-truststore-certs
             mountPath: /usr/local/secrets/truststore_certs
             readOnly: true
+          - name: license-dir
+            mountPath: /opt/license
       securityContext:
         fsGroup: 9999
       volumes:
         - name: ssh-dir
           emptyDir: {}
         - name: data-dir
+          emptyDir: {}
+        - name: license-dir
           emptyDir: {}
         - name: pingdatasync-init
           configMap:

@@ -294,6 +294,8 @@ spec:
         - name: upgrade-dir
           mountPath: /tmp/instance
           subPath: instance
+        - name: license-dir
+          mountPath: /opt/license
         readinessProbe:
           exec:
             command: [ /opt/staging/hooks/85-pa-admin-readiness.sh ]
@@ -344,6 +346,8 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
+        emptyDir: {}
+      - name: license-dir
         emptyDir: {}
       - name: upgrade-dir
         emptyDir: {}

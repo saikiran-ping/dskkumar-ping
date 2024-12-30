@@ -172,6 +172,8 @@ spec:
           - name: pingaccess-was-init
             mountPath: /opt/in/perpetual_license.py
             subPath: perpetual_license.py
+          - name: license-dir
+            mountPath: /opt/license
       - name: pingaccess-was-upgrade
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest
         imagePullPolicy: Always 
@@ -289,6 +291,8 @@ spec:
         - name: upgrade-dir
           mountPath: /tmp/instance
           subPath: instance
+        - name: license-dir
+          mountPath: /opt/license
         readinessProbe:
           exec:
             command: [ /opt/staging/hooks/85-pa-admin-readiness.sh ]
@@ -342,6 +346,8 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
+        emptyDir: {}
+      - name: license-dir
         emptyDir: {}
       - name: upgrade-dir
         emptyDir: {}

@@ -155,6 +155,8 @@ spec:
           - name: pingfederate-init
             mountPath: /opt/in/perpetual_license.py
             subPath: perpetual_license.py
+          - name: license-dir
+            mountPath: /opt/license
       containers:
       - name: pingfederate
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
@@ -237,6 +239,8 @@ spec:
           subPath: ds_env_vars
         - mountPath: /etc/podinfo
           name: podinfo
+        - name: license-dir
+          mountPath: /opt/license
         - name: data-dir
           mountPath: /opt/staging/solutions_artifacts
           subPath: solutions_artifacts
@@ -317,6 +321,8 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
+        emptyDir: {}
+      - name: license-dir
         emptyDir: {}
       - name: pingfederate-init
         configMap:
