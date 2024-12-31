@@ -155,6 +155,8 @@ spec:
           - name: pingaccess-init
             mountPath: /opt/in/perpetual_license.py
             subPath: perpetual_license.py
+          - name: license-dir
+            mountPath: /opt/license
       - name: pingaccess-upgrade
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess/dev:v2.1-release-branch-latest
         imagePullPolicy: Always
