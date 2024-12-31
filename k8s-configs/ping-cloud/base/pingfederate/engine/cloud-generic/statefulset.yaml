@@ -134,7 +134,7 @@ spec:
         envFrom:
         - configMapRef:
             name: pingfederate-environment-variables
-      - name: pingfederate-perpetual-license
+      - name: perpetual-license
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
         imagePullPolicy: Always
         command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]

@@ -151,7 +151,7 @@ spec:
         volumeMounts:
         - name: shared-dir
           mountPath: /opt/shared-dir
-      - name: pingaccess-was-perpetual-license
+      - name: perpetual-license
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest
         imagePullPolicy: Always
         command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]
