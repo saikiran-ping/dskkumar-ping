@@ -167,9 +167,11 @@ spec:
             value: "pingfederate"
           - name: LICENSE_EMPTY_DIR_PATH
             value: "/opt/license"
-        envFrom:
+          - name: OVERRIDE_PRODUCT_LICENSE
+            value: ""
+       envFrom:
           - configMapRef:
-            name: pingfederate-admin-environment-variables
+              name: pingfederate-admin-environment-variables
         securityContext:
             runAsGroup: 9999
             runAsNonRoot: true

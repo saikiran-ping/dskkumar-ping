@@ -142,6 +142,8 @@ spec:
             value: "pingaccess"
           - name: LICENSE_EMPTY_DIR_PATH
             value: "/opt/license"
+          - name: OVERRIDE_PRODUCT_LICENSE
+            value: ""
         envFrom:
           - configMapRef:
               name: pingaccess-environment-variables

@@ -102,9 +102,11 @@ spec:
             value: "pingdirectory"
           - name: LICENSE_EMPTY_DIR_PATH
             value: "/opt/license"
+          - name: OVERRIDE_PRODUCT_LICENSE
+            value: ""
         envFrom:
           - configMapRef:
-            name: pingdatasync-environment-variables
+              name: pingdatasync-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true
