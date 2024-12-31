@@ -145,7 +145,7 @@ spec:
             value: "/opt/license"
         envFrom:
           - configMapRef:
-              name: pingaccess-admin-environment-variables
+            name: pingaccess-admin-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true

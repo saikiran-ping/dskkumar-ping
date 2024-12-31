@@ -145,7 +145,7 @@ spec:
             value: "/opt/license"
         envFrom:
           - configMapRef:
-              name: pingfederate-environment-variables
+            name: pingfederate-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true

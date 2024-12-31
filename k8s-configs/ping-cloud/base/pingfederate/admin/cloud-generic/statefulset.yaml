@@ -168,8 +168,8 @@ spec:
           - name: LICENSE_EMPTY_DIR_PATH
             value: "/opt/license"
         envFrom:
-            - configMapRef:
-                name: pingfederate-admin-environment-variables
+          - configMapRef:
+            name: pingfederate-admin-environment-variables
         securityContext:
             runAsGroup: 9999
             runAsNonRoot: true

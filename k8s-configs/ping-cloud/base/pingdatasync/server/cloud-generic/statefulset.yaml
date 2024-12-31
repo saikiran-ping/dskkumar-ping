@@ -104,7 +104,7 @@ spec:
             value: "/opt/license"
         envFrom:
           - configMapRef:
-              name: pingdatasync-environment-variables
+            name: pingdatasync-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true
