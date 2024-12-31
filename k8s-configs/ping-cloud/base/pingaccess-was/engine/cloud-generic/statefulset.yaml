@@ -135,7 +135,7 @@ spec:
         command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]
         env:
           - name: PRODUCT_LICENSE_NAME
-            value: "pingaccess-was"
+            value: "pingaccess"
           - name: LICENSE_EMPTY_DIR_PATH
             value: "/opt/license"
           - name: OVERRIDE_PRODUCT_LICENSE
