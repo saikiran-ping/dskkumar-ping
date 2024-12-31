@@ -169,7 +169,7 @@ spec:
             value: "/opt/license"
           - name: OVERRIDE_PRODUCT_LICENSE
             value: ""
-       envFrom:
+        envFrom:
           - configMapRef:
               name: pingfederate-admin-environment-variables
         securityContext:
