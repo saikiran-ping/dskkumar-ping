@@ -152,6 +152,8 @@ spec:
           - name: pingaccess-was-init
             mountPath: /opt/in/perpetual_license.py
             subPath: perpetual_license.py
+          - name: license-dir
+            mountPath: /opt/license
       containers:
       - name: pingaccess-was
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest
@@ -185,6 +187,8 @@ spec:
         - name: pingaccess-was-license
           mountPath: /opt/in/instance/conf/pingaccess.lic
           subPath: pingaccess.lic
+        - name: license-dir
+          mountPath: /opt/license
         - name: data-dir
           mountPath: /opt/staging/ds_env_vars
           subPath: ds_env_vars
@@ -235,6 +239,8 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
+        emptyDir: {}
+      - name: license-dir
         emptyDir: {}
       - name: pingaccess-was-init
         configMap:
