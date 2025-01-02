@@ -8,6 +8,8 @@
 - Kustomize: Fix kustomizations to not be completely empty in order to support v5.1+
 - Update separate nodepool - non-consolidating
 - Enable consolidation for default nodepool and add multiple instance type
+- Remove helm-command.sh shim workaround
+- Upgrade Kustomize to 5.5.0
 
 _Changes:_
 
@@ -17,6 +19,8 @@ _Changes:_
 - [X] PDO-8109 Reconcile Grafana differences with p1as-observability
 - [X] PDO-8204 Update separate nodepool - non-consolidating
 - [X] PDO-8205 Enable consolidation for default nodepool and add multiple instance type
+- [X] PDO-8371 Remove helm-command.sh shim workaround
+- [X] PDO-8372 Upgrade Kustomize to 5.5.0
 
 ### 2.0.0
 
@@ -60,6 +64,7 @@ _Changes:_
 - [X] PDO-7469 De-duplicate prod-values.yaml
 - [X] PDO-7482 Fluentbit - remove unnecessary configuration
 - [X] PDO-7527 Grafana: Update PGO dashboards to be compatible with the current PGO version
+- [X] PDO-7564 Update number of shards for ingress index
 - [X] PDO-7608 Making Graviton as default for NON-GA environment, fix GA consistency across envs
 - [X] PDO-7717 Upgrade cert-manager to v1.16.1
 - [X] PDO-7738 Upgrade kubectl to v1.30.4
@@ -67,6 +72,7 @@ _Changes:_
 - [X] PDO-8158 Add p1as-self-service microservice
 - [X] PDO-8193 Microservices profile repo feature branch testing fix
 - [X] PDO-8194 Upgrade External DNS to v0.14.2
+- [X] PDO-8212 Add teleport for cluster access
 - [X] PDO-8363 OpenSearch: Add the Fluent Bit ingestion time field
 - [X] PDO-8144 Upgrade nginx-ingress-controller to v1.11.2 and SigSci agent to 4.57.0
 - [X] PDO-8373 Upgrade Argocd to v2.12.4
