@@ -113,7 +113,7 @@
 #                                  | names)                                             |
 #                                  | Examplelist:"pingaccess pingfederate pingdelegator |
 #                                  | pingaccess-was              "                      |
-#                                  |                                                    |
+#                                  |                                                    |              
 # GLOBAL_TENANT_DOMAIN             | Region-independent URL used for DNS failover/      | Replaces the first segment of
 #                                  | routing.                                           | the TENANT_DOMAIN value with the
 #                                  |                                                    | string "global". For example, it will
@@ -446,6 +446,7 @@ ${IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE}
 ${IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE}
 ${IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE}
 ${IRSA_CLUSTER_AUTOSCALER_KEY_VALUE}
+${GLOBAL_DNS_IAM_ROLE}
 ${KARPENTER_ROLE_ANNOTATION_KEY_VALUE}
 ${NLB_NGX_PUBLIC_ANNOTATION_KEY_VALUE}
 ${PF_PROVISIONING_ENABLED}
@@ -594,7 +595,7 @@ set_ssh_key_pair() {
 
   # Unsupported flow - no private key provided at all or not a file
   else
-    echo 'Provide SSH key-pair files via SSH_ID_PUB_FILE/SSH_ID_KEY_FILE env vars, or omit both for key-pair to be generated'
+    echo 'ERROR - EXITING: Provide SSH key-pair files via SSH_ID_PUB_FILE/SSH_ID_KEY_FILE env vars, or omit both for key-pair to be generated'
     exit 1
   fi
 }
@@ -769,6 +770,7 @@ echo "Initial IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE: ${IRSA_OPENSEARCH_ANNOTATION
 echo "Initial IRSA_CLUSTER_AUTOSCALER_KEY_VALUE: ${IRSA_CLUSTER_AUTOSCALER_KEY_VALUE}"
 echo "Initial IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE: ${IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE}"
 echo "Initial IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE: ${IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE}"
+echo "Initial GLOBAL_DNS_IAM_ROLE: ${GLOBAL_DNS_IAM_ROLE}"
 echo "Initial IRSA_INGRESS_ANNOTATION_KEY_VALUE: ${IRSA_INGRESS_ANNOTATION_KEY_VALUE}"
 echo "Initial KARPENTER_ROLE_ANNOTATION_KEY_VALUE: ${KARPENTER_ROLE_ANNOTATION_KEY_VALUE}"
 echo "Initial NLB_NGX_PUBLIC_ANNOTATION_KEY_VALUE: ${NLB_NGX_PUBLIC_ANNOTATION_KEY_VALUE}"
@@ -894,6 +896,7 @@ export IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE=${IRSA_OPENSEARCH_ANNOTATION_KEY_VAL
 export IRSA_CLUSTER_AUTOSCALER_KEY_VALUE=${IRSA_CLUSTER_AUTOSCALER_KEY_VALUE:-''}
 export IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE=${IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE:-''}
 export IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE=${IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE:-''}
+export GLOBAL_DNS_IAM_ROLE=${GLOBAL_DNS_IAM_ROLE:-''}
 export IRSA_INGRESS_ANNOTATION_KEY_VALUE=${IRSA_INGRESS_ANNOTATION_KEY_VALUE:-''}
 
 export CLUSTER_ENDPOINT=${CLUSTER_ENDPOINT:-''}
@@ -989,7 +992,10 @@ if test ! "${KNOWN_HOSTS_CLUSTER_STATE_REPO}"; then
   else
     SSH_HOST_KEY_TYPE='rsa'
   fi
-  KNOWN_HOSTS_CLUSTER_STATE_REPO="$(ssh-keyscan -t "${SSH_HOST_KEY_TYPE}" -H "${URL_HOST}" 2>/dev/null)"
+  # With some versions of ssh-keyscan (for example starting with MacOS 15.0), the host portion is returned in the output
+  # Since not all versions of ssh-keyscan do this, we don't assume they will function the same way and instead
+  # remove the hostname from the output, otherwise the yaml and known hosts will break
+  KNOWN_HOSTS_CLUSTER_STATE_REPO="$(ssh-keyscan -t "${SSH_HOST_KEY_TYPE}" -H "${URL_HOST}" 2>/dev/null | grep -v "${URL_HOST}")"
 fi
 export KNOWN_HOSTS_CLUSTER_STATE_REPO
 
@@ -1084,6 +1090,7 @@ echo "Using IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE: ${IRSA_OPENSEARCH_ANNOTATION_K
 echo "Using IRSA_CLUSTER_AUTOSCALER_KEY_VALUE: ${IRSA_CLUSTER_AUTOSCALER_KEY_VALUE}"
 echo "Using IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE: ${IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE}"
 echo "Using IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE: ${IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE}"
+echo "Using GLOBAL_DNS_IAM_ROLE: ${GLOBAL_DNS_IAM_ROLE}"
 echo "Using IRSA_INGRESS_ANNOTATION_KEY_VALUE: ${IRSA_INGRESS_ANNOTATION_KEY_VALUE}"
 
 echo "Using CLUSTER_ENDPOINT: ${CLUSTER_ENDPOINT}"
@@ -1149,6 +1156,8 @@ cp ../.gitignore "${PROFILE_REPO_DIR}"
 
 echo "${PING_CLOUD_BASE_COMMIT_SHA}" > "${TARGET_DIR}/pcb-commit-sha.txt"
 
+# Setting Role for accessing global dns
+set_var "GLOBAL_DNS_IAM_ROLE" "" "/pcpt/" "global-dns/iam-role/cert-manager/arn"
 
 # The SUPPORTED_ENVIRONMENT_TYPES variable can either be the CDE names (e.g. dev, test, stage, prod) or the CHUB name "customer-hub",
 # or the corresponding branch names (e.g. v1.8.0-dev, v1.8.0-test, v1.8.0-stage, v1.8.0-master, v1.8.0-customer-hub).
