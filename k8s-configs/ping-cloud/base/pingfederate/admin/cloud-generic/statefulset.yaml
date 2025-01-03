@@ -30,13 +30,13 @@ spec:
       serviceAccountName: pingfederate-admin-serviceaccount
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: pingidentity.com/non-consolidating
-                    operator: In
-                    values:
-                      - "true"
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: pingidentity.com/non-consolidating
+                      operator: In
+                      values:
+                        - "true"
       tolerations:
         - key: "pingidentity.com/non-consolidating"
           operator: "Equal"
