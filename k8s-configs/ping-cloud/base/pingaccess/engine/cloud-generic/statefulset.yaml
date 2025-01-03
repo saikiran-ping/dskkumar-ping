@@ -238,6 +238,7 @@ spec:
         - secretRef:
             name: newrelic-license-key
             optional: false
+
       - name: pingaccess-heartbeat-exporter
         securityContext:
           runAsGroup: 9999
