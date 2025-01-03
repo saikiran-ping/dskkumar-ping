@@ -125,8 +125,8 @@ spec:
         - name: LICENSE_EMPTY_DIR_PATH
           value: "/opt/license"
         envFrom:
-          - configMapRef:
-              name: pingcentral-environment-variables
+        - configMapRef:
+            name: pingcentral-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true
