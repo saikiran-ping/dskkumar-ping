@@ -134,26 +134,24 @@ spec:
         imagePullPolicy: Always
         command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]
         env:
-          - name: PRODUCT_LICENSE_NAME
-            value: "pingaccess"
-          - name: LICENSE_EMPTY_DIR_PATH
-            value: "/opt/license"
-          - name: OVERRIDE_PRODUCT_LICENSE
-            value: ""
+        - name: PRODUCT_LICENSE_NAME
+          value: "pingaccess"
+        - name: LICENSE_EMPTY_DIR_PATH
+          value: "/opt/license"
         envFrom:
-          - configMapRef:
-              name: pingaccess-was-environment-variables
+        - configMapRef:
+            name: pingaccess-was-environment-variables
         securityContext:
           runAsGroup: 9999
           runAsNonRoot: true
           runAsUser: 9031
           allowPrivilegeEscalation: false
         volumeMounts:
-          - name: pingaccess-was-init
-            mountPath: /opt/in/perpetual_license.py
-            subPath: perpetual_license.py
-          - name: license-dir
-            mountPath: /opt/license
+        - name: pingaccess-was-init
+          mountPath: /opt/in/perpetual_license.py
+          subPath: perpetual_license.py
+        - name: license-dir
+          mountPath: /opt/license
       containers:
       - name: pingaccess-was
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest

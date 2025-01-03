@@ -28,20 +28,6 @@ spec:
         lastUpdateReason: "NA"
     spec:
       serviceAccountName: pingfederate-admin-serviceaccount
-      affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: pingidentity.com/non-consolidating
-                      operator: In
-                      values:
-                        - "true"
-      tolerations:
-        - key: "pingidentity.com/non-consolidating"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       initContainers:
       - name: pingfederate-p1as-sso
         securityContext:
@@ -158,31 +144,6 @@ spec:
             name: pingfederate-admin-environment-variables
         - configMapRef:
             name: pingcommon-environment-variables
-      - name: perpetual-license
-        image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
-        imagePullPolicy: Always
-        command: [ "sh", "-c", "python3 /opt/in/perpetual_license.py" ]
-        env:
-          - name: PRODUCT_LICENSE_NAME
-            value: "pingfederate"
-          - name: LICENSE_EMPTY_DIR_PATH
-            value: "/opt/license"
-          - name: OVERRIDE_PRODUCT_LICENSE
-            value: ""
-        envFrom:
-          - configMapRef:
-              name: pingfederate-admin-environment-variables
-        securityContext:
-            runAsGroup: 9999
-            runAsNonRoot: true
-            runAsUser: 9031
-            allowPrivilegeEscalation: false
-        volumeMounts:
-        - name: pingfederate-init
-          mountPath: /opt/in/perpetual_license.py
-          subPath: perpetual_license.py
-        - name: license-dir
-          mountPath: /opt/license
       containers:
       - name: pingfederate-admin
         image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingfederate/dev:v2.1-release-branch-latest
@@ -295,8 +256,6 @@ spec:
           subPath: solutions_artifacts
         - mountPath: /etc/podinfo
           name: podinfo
-        - name: license-dir
-          mountPath: /opt/license
         readinessProbe:
           exec:
             command: [ /opt/staging/hooks/85-pf-admin-readiness.sh ]
@@ -341,8 +300,6 @@ spec:
       - name: shared-dir
         emptyDir: {}
       - name: data-dir
-        emptyDir: {}
-      - name: license-dir
         emptyDir: {}
       - name: pingfederate-init
         configMap:
