@@ -28,9 +28,10 @@ test_valid_perpetual_license() {
   local license_dir="/opt/license"
   local temp_file="/tmp/license_test_output.txt"
 
-  echo "Running integration test for license directory..."
+  echo "Running integration test for license directory in pod: ${pod_name}..."
   kubectl exec -i "${pod_name}" -c $container_name -n "${PING_CLOUD_NAMESPACE}" -- sh -c "ls -a $license_dir" &> $temp_file
   assertEquals "Failed to get contents of ${license_dir}" 0 $?
+
 
   grep -q "$license_file" $temp_file
   assertEquals "License file ${license_file} not found in ${license_dir}" 0 $?
