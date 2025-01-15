@@ -22,7 +22,7 @@ if skipTest "${0}"; then
   exit 0
 fi
 
-# Function to get the full pod name based on the prefix name 'pingcentral'
+#Function to get the full pod name based on the prefix name 'pingcentral'
 get_pod_name() {
   kubectl get pods -n "${PING_CLOUD_NAMESPACE}" --no-headers -o custom-columns=":metadata.name" | grep "^pingcentral" | head -n 1
 }
@@ -34,6 +34,7 @@ test_valid_perpetual_license() {
   local temp_file="/tmp/license_test_output.txt"
 
   pod_name=$(get_pod_name)
+
   echo "Running integration test for license directory in pod: ${pod_name}"
   kubectl exec -i "${pod_name}" -c $container_name -n "${PING_CLOUD_NAMESPACE}" -- sh -c "ls -a $license_dir" &> $temp_file
   assertEquals "Failed to get contents of ${license_dir}" 0 $?
