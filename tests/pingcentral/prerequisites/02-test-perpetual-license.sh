@@ -24,12 +24,12 @@ fi
 
 test_valid_perpetual_license() {
   local license_file="pingcentral.lic"
-  local container_name=" pingcentral"
+  local container_name="pingcentral"
   local license_dir="/opt/license"
   local temp_file="/tmp/license_test_output.txt"
 
   echo "Running integration test for license directory..."
-  kubectl exec -i "${pod_name}"  -c $container_name -n "${PING_CLOUD_NAMESPACE}" -- sh -c "ls -a $license_dir" &> $temp_file
+  kubectl exec -i "${pod_name}" -c $container_name -n "${PING_CLOUD_NAMESPACE}" -- sh -c "ls -a $license_dir" &> $temp_file
   assertEquals "Failed to get contents of ${license_dir}" 0 $?
 
   grep -q "$license_file" $temp_file
