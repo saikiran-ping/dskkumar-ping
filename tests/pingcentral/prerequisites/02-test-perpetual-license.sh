@@ -23,7 +23,7 @@ if skipTest "${0}"; then
 fi
 
 test_valid_perpetual_license() {
-  local license_file="PingDirectory.lic"
+  local license_file="pingcentral.lic"
   local container_name=" pingcentral"
   local license_dir="/opt/license"
   local temp_file="/tmp/license_test_output.txt"
