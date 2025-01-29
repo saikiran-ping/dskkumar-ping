@@ -23,7 +23,6 @@ export IMAGE_MAP="pingcloud-apps/pingaccess
    pingcloud-monitoring/opensearch
    pingcloud-monitoring/prometheus-json-exporter
    pingcloud-monitoring/prometheus-job-exporter
-   pingcloud-monitoring/newrelic-tags-exporter
    pingcloud-monitoring/nri-kubernetes
    pingcloud-services/robot-framework
    pingcloud-services/sigsci-nginx-ingress-controller
@@ -33,4 +32,5 @@ export IMAGE_MAP="pingcloud-apps/pingaccess
 
 export CHART_MAP="p1as-beluga-tools
    p1as-pingdirectory
-   p1as-self-service"
+   p1as-self-service
+   p1as-cloudwatch"

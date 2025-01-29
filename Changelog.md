@@ -11,10 +11,15 @@
 - Upgrade Kustomize to 5.5.0
 - Integrate init-container to use perpetual license
 - Enable default ingress object to accept LDAPS traffic through Nginx Private
+- Add self-service URL to env_vars
+- Removing value for newrelic-tags-exporter image and hardcoding in statefulset manifests
+- Added p1as-observability and cloudwatch deployment to pcb
+- Removed the warm node pool and its associated opensearch-sc1 StorageClass
 
 _Changes:_
 
 - [X] PDO-4881 Use code sharing methods for Logger.lib.sh
+- [X] PDO-5995 Add p1as-observability to PCB: Cloudwatch Agent
 - [X] PDO-6116 Kustomize: Fix kustomizations to not be completely empty in order to support v5.1+
 - [X] PDO-7396 Integrate init-container to use perpetual license
 - [X] PDO-7593 Create default ingress object to accept LDAPS traffic through Nginx Private
@@ -23,7 +28,10 @@ _Changes:_
 - [X] PDO-8205 Enable consolidation for default nodepool and add multiple instance type
 - [X] PDO-8371 Remove helm-command.sh shim workaround
 - [X] PDO-8372 Upgrade Kustomize to 5.5.0
+- [X] PDO-8782 Figure out different setup for newrelic-tags-exporter for microservices
 - [X] PDO-8958 Global DNS: Implement Changes in PCB
+- [X] PDO-8981 Add self-service URL to env_vars
+- [X] PDO-9122 Revise the ISM and remove WARM node pools and its components
 
 ### 2.0.0
 
