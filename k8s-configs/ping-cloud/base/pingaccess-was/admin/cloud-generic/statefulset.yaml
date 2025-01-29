@@ -161,7 +161,7 @@ spec:
         - name: license-dir
           mountPath: /opt/license
       - name: pingaccess-was-upgrade
-        image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest
+        image: 705370621539.dkr.ecr.us-west-2.amazonaws.com/pingcloud-apps/pingaccess-was:pdo-9096-PA-new-license
         imagePullPolicy: Always 
         command: ["/bin/sh"]
         args: ["-c", "/opt/in/hooks/22-upgrade-server.sh"]
@@ -237,7 +237,7 @@ spec:
             optional: false
       containers:
       - name: pingaccess-was-admin
-        image: public.ecr.aws/r2h3l6e4/pingcloud-apps/pingaccess-was/dev:v2.1-release-branch-latest
+        image: 705370621539.dkr.ecr.us-west-2.amazonaws.com/pingcloud-apps/pingaccess-was:pdo-9096-PA-new-license
         imagePullPolicy: Always
         securityContext:
           runAsGroup: 9999
