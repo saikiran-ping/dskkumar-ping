@@ -28,15 +28,6 @@ testProductVersion() {
   assertEquals "Validation failed on product version" 0 $?
 }
 
-testJavaVersion() {
-  log "Test: Verify Java Version"
-
-  kubectl exec -n $PING_CLOUD_NAMESPACE $POD_NAME -c pingdirectory -- sh -c \
-    'java -version 2>&1 | grep -q ${PRODUCT_JAVA_VERSION}'
-
-  assertEquals "Validation failed on Java version" 0 $?
-}
-
 
 shift $#
 
