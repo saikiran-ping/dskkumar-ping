@@ -18,6 +18,10 @@ testAlpineVersion() {
   kubectl exec -n $PING_CLOUD_NAMESPACE $POD_NAME -c pingdirectory -- sh -c \
     'cat /etc/alpine-release | grep -q ${PRODUCT_ALPINE_VERSION}'
   assertEquals "Validation failed on alpine version" 0 $?
+
+  kubectl exec -n $PING_CLOUD_NAMESPACE $POD_NAME -c pingdatasync -- sh -c \
+      'cat /etc/alpine-release | grep -q 0.0.0.0'
+    assertNotEquals "Alpine version 0.0.0.0 was not expected to pass" 0 $?
 }
 
 testProductVersion() {
@@ -26,6 +30,10 @@ testProductVersion() {
   kubectl exec -n $PING_CLOUD_NAMESPACE $POD_NAME -c pingdirectory -- sh -c \
     'status --version | head -n 1 | grep -q ${PRODUCT_VERSION}'
   assertEquals "Validation failed on product version" 0 $?
+
+   kubectl exec -n $PING_CLOUD_NAMESPACE $POD_NAME -c pingdatasync -- sh -c \
+      'status --version | head -n 1 | grep -q 0.0.0.0'
+    assertNotEquals "Product version 0.0.0.0 was not expected to pass" 0 $?
 }
 
 
