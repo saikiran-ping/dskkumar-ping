@@ -192,7 +192,7 @@ spec:
           subPath: ds_env_vars
         readinessProbe:
           exec:
-            command: [ /opt/staging/hooks/99-pa-was-engine-readiness.sh ]
+            command: [ /opt/staging/hooks/99-pa-was-engine-liveness.sh ]
           initialDelaySeconds: 0
           periodSeconds: 5
           failureThreshold: 1

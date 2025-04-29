@@ -301,7 +301,7 @@ spec:
           mountPath: /opt/sso/p1as_configs
         readinessProbe:
           exec:
-            command: [ /opt/staging/hooks/85-pa-admin-readiness.sh]
+            command: [ /opt/staging/hooks/85-pa-admin-readiness.sh ]
           initialDelaySeconds: 0
           periodSeconds: 5
           failureThreshold: 1
