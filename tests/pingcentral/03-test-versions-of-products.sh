@@ -32,12 +32,12 @@ testProductVersion() {
 
    # Positive check
     kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c pingcentral -- sh -c \
-      "unzip -p /opt/out/instance/bin/pf-startup.jar META-INF/maven/pingfederate/pf-startup/pom.properties | grep -q \"version=$PRODUCT_VERSION\"" > /dev/null 2>&1
+      "unzip -p /opt/out/instance/bin/ping-central.jar META-INF/maven/com.pingidentity.pass/ping-central/pom.properties | grep -q \"version=$PRODUCT_VERSION\"" > /dev/null 2>&1
     assertEquals "Validation failed on expected Product version: $PRODUCT_VERSION" 0 $?
 
     # Negative check
     kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c pingcentral -- sh -c \
-      "unzip -p /opt/out/instance/bin/pf-startup.jar META-INF/maven/pingfederate/pf-startup/pom.properties | grep -q 'version=0.0.0.0'" > /dev/null 2>&1
+      "unzip -p /opt/out/instance/bin/ping-central.jarr META-INF/maven/com.pingidentity.pass/ping-central/pom.properties | grep -q 'version=0.0.0.0'" > /dev/null 2>&1
     assertNotEquals "Product version 0.0.0.0 was incorrectly accepted" 0 $?
 
 }
