@@ -12,6 +12,8 @@ fi
 POD_NAME="pingaccess-admin-0"
 CONTAINER="pingaccess-admin"
 
+echo "Product Version: $PRODUCT_VERSION"
+
 testAlpineVersion() {
   log "Test: Verify Alpine Version"
 
