@@ -17,7 +17,7 @@ testAlpineVersion() {
 
   # Positive Check
   kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c pingcentral  -- sh -c \
-    "grep -q \"$PRODUCT_ALPINE_VERSION\" /etc/alpine-release"
+    "grep -q \"$PRODUCT_ALPINE_VERSION\" /etc/alpine-release" > /dev/null 2>&1
   assertEquals "Validation failed on expected Alpine version: $PRODUCT_ALPINE_VERSION" 0 $?
 
 
@@ -37,7 +37,7 @@ testProductVersion() {
 
     # Negative check
     kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c pingcentral -- sh -c \
-      "unzip -p /opt/out/instance/bin/ping-central.jarr META-INF/maven/com.pingidentity.pass/ping-central/pom.properties | grep -q 'version=0.0.0.0'" > /dev/null 2>&1
+      "unzip -p /opt/out/instance/bin/ping-central.jar META-INF/maven/com.pingidentity.pass/ping-central/pom.properties | grep -q 'version=0.0.0.0'" > /dev/null 2>&1
     assertNotEquals "Product version 0.0.0.0 was incorrectly accepted" 0 $?
 
 }
@@ -47,7 +47,7 @@ testJavaVersion() {
 
   # Positive Check
   kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c pingcentral -- sh -c \
-    "java -version 2>&1 | grep -q \"$PRODUCT_JAVA_VERSION\""
+    "java -version 2>&1 | grep -q \"$PRODUCT_JAVA_VERSION\"" > /dev/null 2>&1
   assertEquals "Validation failed on expected Java version: $PRODUCT_JAVA_VERSION" 0 $?
 
   # Negative Check
