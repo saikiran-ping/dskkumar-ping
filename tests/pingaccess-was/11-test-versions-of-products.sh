@@ -12,7 +12,6 @@ fi
 POD_NAME="pingaccess-was-admin-0"
 CONTAINER="pingaccess-was-admin"
 
-echo "Product Version: $PRODUCT_VERSION"
 
 testAlpineVersion() {
   log "Test: Verify Alpine Version"
@@ -30,18 +29,18 @@ testAlpineVersion() {
 }
 
 
-#testProductVersion() {
-#  log "Test: Verify Product Version"
-#
-#  # Positive check
-#  kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c "${CONTAINER}" -- sh -c \
-#    'unzip -p /opt/out/instance/lib/pingaccess-admin-"${PRODUCT_VERSION}".jar META-INF/maven/com.pingidentity.pingaccess/pingaccess-admin/pom.properties | grep -q version="${PRODUCT_VERSION}"' > /dev/null 2>&1
-#  assertEquals "Validation failed on expected Product version: $PRODUCT_VERSION" 0 $?
-#
-#  kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c "${CONTAINER}" -- sh -c \
-#    'unzip -p /opt/out/instance/lib/pingaccess-admin-"${PRODUCT_VERSION}".jar META-INF/maven/com.pingidentity.pingaccess/pingaccess-admin/pom.properties | grep -q version=0.0.0.0' > /dev/null 2>&1
-#  assertNotEquals "Product version 0.0.0.0 was incorrectly accepted" 0 $?
-#}
+testProductVersion() {
+  log "Test: Verify Product Version"
+
+  # Positive check
+  kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c "${CONTAINER}" -- sh -c \
+    'unzip -p /opt/out/instance/lib/pingaccess-admin-"${PRODUCT_VERSION}*".jar META-INF/maven/com.pingidentity.pingaccess/pingaccess-admin/pom.properties | grep -q version="${PRODUCT_VERSION}"' > /dev/null 2>&1
+  assertEquals "Validation failed on expected Product version: $PRODUCT_VERSION" 0 $?
+
+  kubectl exec -n "$PING_CLOUD_NAMESPACE" "$POD_NAME" -c "${CONTAINER}" -- sh -c \
+    'unzip -p /opt/out/instance/lib/pingaccess-admin-"${PRODUCT_VERSION}*".jar META-INF/maven/com.pingidentity.pingaccess/pingaccess-admin/pom.properties | grep -q version=0.0.0.0' > /dev/null 2>&1
+  assertNotEquals "Product version 0.0.0.0 was incorrectly accepted" 0 $?
+}
 
 testJavaVersion() {
   log "Test: Verify Java Version"
