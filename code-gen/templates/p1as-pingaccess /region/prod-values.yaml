@@ -1,0 +1,40 @@
+# pingaccess application settings that are shared with both pingaccess Admin and Engine
+pingaccess:
+
+  # Application settings that is only for pingaccess Admin
+  admin:
+    # pingaccess Heap
+    paMinHeap: "1024m"
+    paMaxHeap: "1024m"
+    paMinYgen: "512m"
+    paMaxYgen: "512m"
+
+    statefulSet:
+      resources:
+        limits:
+          memory: "4Gi"
+          cpu: "2"
+        requests:
+          memory: "4Gi"
+          cpu: "2"
+
+  # Application settings that is only for pingaccess Engine
+  engine:
+    # pingaccess Heap
+    paMinHeap: "1024m"
+    paMaxHeap: "1024m"
+    paMinYgen: "512m"
+    paMaxYgen: "512m"
+
+    statefulSet:
+      hpa:
+        minReplicas: 2
+        maxReplicas: 2
+
+      resources:
+        limits:
+          memory: "2Gi"
+          cpu: "1"
+        requests:
+          memory: "2Gi"
+          cpu: "1"
