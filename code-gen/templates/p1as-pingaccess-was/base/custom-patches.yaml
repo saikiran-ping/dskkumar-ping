@@ -4,4 +4,4 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: pingaccess-custom-placeholder-base
+  name: pingaccess-was-custom-placeholder-base
