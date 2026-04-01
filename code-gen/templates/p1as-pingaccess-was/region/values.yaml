@@ -1,46 +1,31 @@
-# pingaccess application settings that are shared with both pingaccess Admin and Engine
 pingaccessWas:
-  irsapaWasAnnotationKeyValue: "${IRSA_paWas_ANNOTATION_KEY_VALUE}"
-  podReaperEnabled: "enabled"
+  # TODO: PDO-11355 => Update service account to use irsa-pingaccess
+  irsaPaAnnotationKeyValue: ""
+  serverProfilePath: "profiles/pingaccess"
+  podReaperEnabled: true
+  javaOpts: "-javaagent:/opt/staging/jmx_prometheus_javaagent-0.14.0.jar=8080:/opt/in/instance/conf/jmx_export_config.yaml"
 
   license:
-    # Only use if you want to provide your own SSM paWasth to perpetual license
-    # The default is that automation will determine SSM paWasth to retrieve product license
+    # Only use if you want to provide your own SSM path to perpetual license
+    # The default is that automation will determine SSM path to retrieve product license
     overrideProductLicense: ""
 
-  # Application settings that is only for pingaccess Admin
   admin:
-    paWasLogLevel: "INFO"
-    verbose: false
-    # pingaccess Heap
-    paWasWasMinHeap: "128m"
-    paWasWasMaxHeap: "256m"
-    paWasWasMinYgen: "128m"
-    paWasWasMaxYgen: "128m"
+    verbose: "false"
+    skipLiveness: "false"
+    configQueryKpValidDays: "365"
+    # PingAccess Heap
+    paWasMinHeap: "128m"
+    paWasMaxHeap: "256m"
+    paWasMinYgen: "128m"
+    paWasMaxYgen: "128m"
+    # Individual files should be spelled out, globs are unreliable
+    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
 
-    # Restore Variables
     restore:
-      # Choose desired backup to restore from S3. The default is latest.zip which is the most recent backup.
-      backupaWasileName: ""
+      backupFileName: ""
+      restoreBackup: "true"
 
-      # When deleting pingaccess Admin PVC.
-      # Automation will attempt to pull the latest.zip unless specified differently using 'backupaWasileName' variable.
-      # Set 'restoreBackup' to 'false' if you don't want to restore the latest backup from S3.
-      restoreBackup: true
-
-    # The following will set pingaccess the minimum and the maximum
-    # number of threads used to configure pingaccess thread pools within run.properties.
-    # By default, this was designed to be empty and the P1AS automation will
-    # dynamically set based on the CPU of the pod. Only override these 2 variables if you truly want to set yourself.
-    # 'paWas_JETTY_THREADS_MIN' and 'paWas_JETTY_THREADS_MAX' is determined for admin.
-    paWasJettyThreadsMin: ""
-    paWasJettyThreadsMax: ""
-
-    # Control Ingress Resource for pingaccess Admin
-    ingress:
-      enableExternalIngress: false
-
-    # Set container limits for the pingaccessWas Admin Statefulset
     statefulSet:
       lastUpdateReason: "NA"
       replicas: 1
@@ -51,51 +36,76 @@ pingaccessWas:
         requests:
           memory: "1280Mi"
           cpu: "20m"
-    # Persistent volume size configuration for pingaccess Admin.
-    persistentVolume:
-      size: 20Gi
+      upgradeResources:
+        limits:
+          memory: "6Gi"
+          cpu: "2"
+        requests:
+          memory: "6Gi"
+          cpu: "2"
 
-  # Application settings that is only for pingaccess Engine
+    ingress:
+      enableExternalIngress: false
+      ingressClassName: "nginx-private"
+
+    persistentVolume:
+      storageClassName: "pingaccess-was-gp3"
+      storageProvisioner: "ebs.csi.aws.com"
+      fsType: "ext4"
+      storageType: "gp3"
+      size: "20Gi"
+
+
   engine:
-    paWasLogLevel: "INFO"
-    verbose: false
+    verbose: "false"
+    skipLiveness: "false"
+
+    # PingAccess Heap
     paWasMinHeap: "1024m"
     paWasMaxHeap: "1024m"
     paWasMinYgen: "512m"
     paWasMaxYgen: "512m"
 
-    # The following will set pingaccess the minimum and the maximum
-    # number of threads used to configure pingaccess thread pools within run.properties.
-    # By default, this was designed to be empty and the P1AS automation will
-    # dynamically set based on the CPU of the pod. Only override these 2 variables if you truly want to set yourself.
-    # 'paWas_JETTY_THREADS_MIN' and 'paWas_JETTY_THREADS_MAX' is determined for runtime engine.
-    paWasJettyThreadsMin: ""
-    paWasJettyThreadsMax: ""
+    # Individual files should be spelled out, globs are unreliable
+    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
 
-    # Set container limits for the pingaccess Engine Statefulset
     statefulSet:
       lastUpdateReason: "NA"
-      replicas: "2"
-      resources:
-        requests:
-          memory: "4Gi"
-          cpu: 2
-        limits:
-          memory: "4Gi"
-          cpu: 2
+      # Number of replicas for the PingAccess-WAS engine StatefulSet in customer-hub.
+      # Replicas are set explicitly for customer-hub because there is no HPA managing scaling due to cost savings.
+      chubReplicas: 2
       podDisruptionBudget:
         minAvailable: "30%"
       hpa:
         minReplicas: 2
         maxReplicas: 2
         averageUtilization: 70
+      resources:
+        limits:
+          memory: "2560Mi"
+          cpu: "1"
+        requests:
+          memory: "1280Mi"
+          cpu: "100m"
 
-  # Outbound provisioning settings
-  provisioning:
-    # Secret paWasth for storing Provisioning RDS database details
-    provisioningRdsDetails: "${paWas_RDS_SECRET_paWasTH}"
+    ingress:
+      ingressClassName: "nginx-public"
+      commonAnnotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/modsecurity-snippet: |
+          Include /etc/nginx/owasp-modsecurity-crs/nginx-modsecurity.conf
+          SecRuleEngine DetectionOnly
+          SecRequestBodyAccess On
+          SecAuditEngine RelevantOnly
+          SecAuditLogParts ABCDEFGHIJKZ
+          SecAuditLogType Serial
+          SecAuditLogFormat JSON
+          SecAuditLog /dev/stdout
 
-  # Periodic CronJob settings for backing up pingaccess Admin
+
+  # Periodic CronJob settings for backing up PingAccess-was Admin
   periodicBackupCronJob:
     schedule: "30 * * * *"
     resources:
@@ -105,30 +115,3 @@ pingaccessWas:
       requests:
         memory: "25Mi"
         cpu: "25m"
-
-  # Radius Proxy settings
-  radiusProxy:
-    enabled: false
-
-    # Control side-car container within pingaccess statefulset
-    statefulSet:
-      resources:
-        requests:
-          memory: "200Mi"
-          cpu: "200m"
-        limits:
-          memory: "500Mi"
-          cpu: "400m"
-
-  # Heartbeat Exporter settings
-  heartbeatExporter:
-
-    # Control side-car container within pingaccess statefulset
-    statefulSet:
-      resources:
-        requests:
-          memory: "300Mi"
-          cpu: "100m"
-        limits:
-          memory: "300Mi"
-          cpu: "100m"
