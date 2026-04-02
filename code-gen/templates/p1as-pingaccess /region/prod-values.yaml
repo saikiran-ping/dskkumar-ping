@@ -3,7 +3,7 @@ pingaccess:
 
   # Application settings that is only for pingaccess Admin
   admin:
-    # pingaccess Heap
+    # Pingaccess Heap
     paMinHeap: "1024m"
     paMaxHeap: "1024m"
     paMinYgen: "512m"
@@ -27,7 +27,7 @@ pingaccess:
 
   # Application settings that is only for pingaccess Engine
   engine:
-    # pingaccess Heap
+    # Pingaccess Heap
     paMinHeap: "1024m"
     paMaxHeap: "1024m"
     paMinYgen: "512m"

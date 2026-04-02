@@ -415,16 +415,6 @@ ${USER_BASE_DN_4}
 ${USER_BASE_DN_5}
 ${ADMIN_CONSOLE_BRANDING}
 ${ENVIRONMENT_PREFIX}
-${PA_WAS_MIN_HEAP}
-${PA_WAS_MAX_HEAP}
-${PA_WAS_MIN_YGEN}
-${PA_WAS_MAX_YGEN}
-${PA_WAS_GCOPTION}
-${PA_MIN_HEAP}
-${PA_MAX_HEAP}
-${PA_MIN_YGEN}
-${PA_MAX_YGEN}
-${PA_GCOPTION}
 ${MYSQL_SERVICE_HOST}
 ${MYSQL_USER}
 ${MYSQL_PASSWORD}
@@ -1139,13 +1129,6 @@ export USER_BASE_DN_3="${USER_BASE_DN_3}"
 export USER_BASE_DN_4="${USER_BASE_DN_4}"
 export USER_BASE_DN_5="${USER_BASE_DN_5}"
 
-export PA_WAS_GCOPTION='-XX:+UseParallelGC'
-export PA_MIN_HEAP=${PA_MIN_HEAP:-"1024m"}
-export PA_MAX_HEAP=${PA_MAX_HEAP:-"1024m"}
-export PA_MIN_YGEN=${PA_MIN_YGEN:-"512m"}
-export PA_MAX_YGEN=${PA_MAX_YGEN:-"512m"}
-export PA_GCOPTION='-XX:+UseParallelGC'
-
 export APP_RESYNC_SECONDS="${APP_RESYNC_SECONDS:-60}"
 
 export CERT_RENEW_BEFORE="${CERT_RENEW_BEFORE:-720h0m0s}"
@@ -1377,26 +1360,6 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
     export PF_PD_BIND_PROTOCOL=ldaps
     export PF_PD_BIND_USESSL=true
   fi
-
-  # Update the product specific variables based on environment.
-  case "${ENV}" in
-    dev | test)
-
-      # Set PA variables
-      export PA_WAS_MIN_HEAP=${PA_WAS_MIN_HEAP:-"1024m"}
-      export PA_WAS_MAX_HEAP=${PA_WAS_MAX_HEAP:-"1024m"}
-      export PA_WAS_MIN_YGEN=${PA_WAS_MIN_YGEN:-"512m"}
-      export PA_WAS_MAX_YGEN=${PA_WAS_MAX_YGEN:-"512m"}
-      ;;
-    stage | prod | customer-hub)
-
-      # Set PA variables
-      export PA_WAS_MIN_HEAP=${PA_WAS_MIN_HEAP:-"2048m"}
-      export PA_WAS_MAX_HEAP=${PA_WAS_MAX_HEAP:-"2048m"}
-      export PA_WAS_MIN_YGEN=${PA_WAS_MIN_YGEN:-"1024m"}
-      export PA_WAS_MAX_YGEN=${PA_WAS_MAX_YGEN:-"1024m"}
-      ;;
-  esac
 
   "${IS_BELUGA_ENV}" &&
       export CLUSTER_NAME="${TENANT_NAME}" ||

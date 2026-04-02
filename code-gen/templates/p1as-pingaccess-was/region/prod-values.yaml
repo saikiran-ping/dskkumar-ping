@@ -3,11 +3,11 @@ pingaccessWas:
 
   # Application settings that is only for pingaccess Admin
   admin:
-    # pingaccess Heap
-    paWasWasMinHeap: "128m"
-    paWasWasMaxHeap: "256m"
-    paWasWasMinYgen: "128m"
-    paWasWasMaxYgen: "128m"
+    # PingAccess Heap
+    paWasMinHeap: "2048m"
+    paWasMaxHeap: "2048m"
+    paWasMinYgen: "1024m"
+    paWasMaxYgen: "1024m"
 
     statefulSet:
       resources:
@@ -28,16 +28,16 @@ pingaccessWas:
 
   # Application settings that is only for pingaccess Engine
   engine:
-    # pingaccess Heap
-    paWasMinHeap: "1024m"
-    paWasMaxHeap: "1024m"
-    paWasMinYgen: "512m"
-    paWasMaxYgen: "512m"
+    # PingAccess Heap
+    paWasMinHeap: "2048m"
+    paWasMaxHeap: "2048m"
+    paWasMinYgen: "1024m"
+    paWasMaxYgen: "1024m"
 
     statefulSet:
       hpa:
         minReplicas: 2
-        maxReplicas: 16
+        maxReplicas: 8
       resources:
         limits:
           memory: "3Gi"

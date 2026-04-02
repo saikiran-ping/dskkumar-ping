@@ -1,6 +1,4 @@
 pingaccessWas:
-  # TODO: PDO-11355 => Update service account to use irsa-pingaccess
-  irsaPaAnnotationKeyValue: ""
   serverProfilePath: "profiles/pingaccess"
   podReaperEnabled: true
   javaOpts: "-javaagent:/opt/staging/jmx_prometheus_javaagent-0.14.0.jar=8080:/opt/in/instance/conf/jmx_export_config.yaml"
@@ -15,10 +13,12 @@ pingaccessWas:
     skipLiveness: "false"
     configQueryKpValidDays: "365"
     # PingAccess Heap
-    paWasMinHeap: "128m"
-    paWasMaxHeap: "256m"
-    paWasMinYgen: "128m"
-    paWasMaxYgen: "128m"
+    paWasMinHeap: "1024m"
+    paWasMaxHeap: "1024m"
+    paWasMinYgen: "512m"
+    paWasMaxYgen: "512m"
+    paGcOption: "-XX:+UseParallelGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
+
     # Individual files should be spelled out, globs are unreliable
     k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
 
@@ -65,6 +65,7 @@ pingaccessWas:
     paWasMaxHeap: "1024m"
     paWasMinYgen: "512m"
     paWasMaxYgen: "512m"
+    paGcOption: "-XX:+UseParallelGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
 
     # Individual files should be spelled out, globs are unreliable
     k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
