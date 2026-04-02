@@ -15,18 +15,6 @@ patchesStrategicMerge:
 
 patchesJson6902:
 
-### PingAccess WAS Engine Last Update Config Map ###
-- target:
-    group: apps
-    version: v1
-    kind: StatefulSet
-    name: pingaccess-was
-  patch: |
-    - op: add
-      path: /spec/template/spec/containers/0/envFrom/-
-      value:
-        configMapRef:
-          name: pingaccess-was-last-update-config
 
 ### Separated Ingresses through PA-WAS engines ###
 
