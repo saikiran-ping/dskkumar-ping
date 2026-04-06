@@ -1,5 +1,4 @@
 pingaccessWas:
-  serverProfilePath: "profiles/pingaccess"
   podReaperEnabled: true
   javaOpts: "-javaagent:/opt/staging/jmx_prometheus_javaagent-0.14.0.jar=8080:/opt/in/instance/conf/jmx_export_config.yaml"
 
@@ -9,9 +8,6 @@ pingaccessWas:
     overrideProductLicense: ""
 
   admin:
-    verbose: "false"
-    skipLiveness: "false"
-    configQueryKpValidDays: "365"
     # PingAccess Heap
     paWasMinHeap: "1024m"
     paWasMaxHeap: "1024m"
@@ -19,12 +15,8 @@ pingaccessWas:
     paWasMaxYgen: "512m"
     paWasGcOption: "-XX:+UseParallelGC"
 
-    # Individual files should be spelled out, globs are unreliable
-    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
-
     restore:
       backupFileName: ""
-      restoreBackup: "true"
 
     statefulSet:
       lastUpdateReason: "NA"
@@ -46,19 +38,13 @@ pingaccessWas:
 
     ingress:
       enableExternalIngress: false
-      ingressClassName: "nginx-private"
 
     persistentVolume:
-      storageClassName: "pingaccess-was-gp3"
-      storageProvisioner: "ebs.csi.aws.com"
-      fsType: "ext4"
-      storageType: "gp3"
       size: "20Gi"
 
 
   engine:
     verbose: "false"
-    skipLiveness: "false"
 
     # PingAccess Heap
     paWasMinHeap: "1024m"
@@ -66,9 +52,6 @@ pingaccessWas:
     paWasMinYgen: "512m"
     paWasMaxYgen: "512m"
     paWasGcOption: "-XX:+UseParallelGC"
-
-    # Individual files should be spelled out, globs are unreliable
-    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/log/pingaccess_api_audit_har.log"
 
     statefulSet:
       lastUpdateReason: "NA"
@@ -90,7 +73,6 @@ pingaccessWas:
           cpu: "100m"
 
     ingress:
-      ingressClassName: "nginx-public"
       commonAnnotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         nginx.ingress.kubernetes.io/enable-modsecurity: "true"
@@ -104,7 +86,6 @@ pingaccessWas:
           SecAuditLogType Serial
           SecAuditLogFormat JSON
           SecAuditLog /dev/stdout
-
 
   # Periodic CronJob settings for backing up PingAccess-was Admin
   periodicBackupCronJob:
