@@ -1,6 +1,5 @@
 # pingaccess application settings that are shared with both pingaccess Admin and Engine
 pingaccess:
-  serverProfilePath: "profiles/pingaccess"
   podReaperEnabled: true
   paAdminApiBasicAuthEnabled: false
   javaOpts: "-javaagent:/opt/staging/jmx_prometheus_javaagent-0.14.0.jar=8080:/opt/in/instance/conf/jmx_export_config.yaml"
@@ -11,8 +10,6 @@ pingaccess:
     overrideProductLicense: ""
 
   admin:
-    verbose: "false"
-    configQueryKpValidDays: "365"
     # PingAccess Heap
     paMinHeap: "1024m"
     paMaxHeap: "1024m"
@@ -20,8 +17,6 @@ pingaccess:
     paMaxYgen: "512m"
     paGcOption: "-XX:+UseParallelGC"
 
-    # Individual files should be spelled out, globs are unreliable
-    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_agent_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/upgrade/log/upgrade_status.log /opt/out/instance/log/pingaccess_api_audit_har.log"
     restore:
       backupFileName: ""
       restoreBackup: "true"
@@ -46,19 +41,13 @@ pingaccess:
 
     ingress:
       enableExternalIngress: false
-      ingressClassName: "nginx-private"
 
     persistentVolume:
-      storageClassName: "pingaccess-gp3"
-      storageProvisioner: "ebs.csi.aws.com"
-      fsType: "ext4"
-      storageType: "gp3"
       size: "20Gi"
 
 
   engine:
     verbose: "false"
-    skipLiveness: "false"
 
     # PingAccess Heap
     paMinHeap: "1024m"
@@ -66,9 +55,6 @@ pingaccess:
     paMinYgen: "512m"
     paMaxYgen: "512m"
     paGcOption: "-XX:+UseParallelGC"
-
-    # Individual files should be spelled out, globs are unreliable
-    k8sTailLogFiles: "/opt/out/instance/log/pingaccess_engine_audit.log /opt/out/instance/log/pingaccess_api_audit.log /opt/out/instance/log/pingaccess_agent_audit.log /opt/out/instance/log/pingaccess_sideband_audit.log /opt/out/instance/log/pingaccess_sideband_client_audit.log /opt/out/instance/log/pingaccess.log /opt/out/instance/upgrade/log/upgrade.log /opt/out/instance/upgrade/log/audit.log /opt/out/instance/upgrade/log/upgrade_status.log /opt/out/instance/log/pingaccess_api_audit_har.log"
 
     statefulSet:
       lastUpdateReason: "NA"
@@ -85,10 +71,6 @@ pingaccess:
         requests:
           memory: "2Gi"
           cpu: "1"
-
-    ingress:
-      ingressClassName: "nginx-public"
-
 
   # Periodic CronJob settings for backing up PingAccess Admin
   periodicBackupCronJob:

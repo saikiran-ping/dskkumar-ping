@@ -433,8 +433,6 @@ ${BOOTSTRAP_IMAGE_TAG}
 ${P14C_INTEGRATION_IMAGE_TAG}
 ${ANSIBLE_BELUGA_IMAGE_TAG}
 ${PINGCENTRAL_IMAGE_TAG}
-${PINGACCESS_IMAGE_TAG}
-${PINGACCESS_WAS_IMAGE_TAG}
 ${PINGDELEGATOR_IMAGE_TAG}
 ${OS_BOOTSTRAP_IMAGE_TAG}
 ${LOGSTASH_IMAGE_TAG}
@@ -1263,7 +1261,6 @@ PROFILE_REPO_MIRRORS=("p1as-pingdirectory p1as-pingfederate")
 
 CUSTOMER_HUB='customer-hub'
 PING_CENTRAL='pingcentral'
-PING_ACCESS='pingaccess'
 
 mkdir -p "${BOOTSTRAP_DIR}"
 mkdir -p "${CLUSTER_STATE_REPO_DIR}"
@@ -1623,7 +1620,7 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   if test "${ENV}" = "${CUSTOMER_HUB}"; then
     echo "CHUB deploy identified, retaining only PingCentral and PingAccess profiles"
     # Retain only the pingcentral & pingaccess profiles
-    find "${ENV_PROFILES_DIR}" -type d -mindepth 1 -maxdepth 1 -not -name "${PING_CENTRAL}" -not -name "${PING_ACCESS}" -exec rm -rf {} +
+    find "${ENV_PROFILES_DIR}" -type d -mindepth 1 -maxdepth 1 -not -name "${PING_CENTRAL}" -exec rm -rf {} +
 
     if test "${TENANT_DOMAIN}" = "${PRIMARY_TENANT_DOMAIN}"; then
       echo "Primary CHUB identified, disabling opensearch cluster."
