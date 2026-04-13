@@ -115,12 +115,12 @@
 # ENVIRONMENTS                     | The environments the customer is entitled to. This | dev test stage prod customer-hub
 #                                  | will be a subset of SUPPORTED_ENVIRONMENT_TYPES    |
 #                                  |                                                    |
-# EXTERNAL_INGRESS_ENABLED         | List of ping apps(pingaccess pingaccess-was        | No defaults
-#                                  | pingdelegator pingfederate) for which you can      |
-#                                  | enable external ingress(the values are ping app    |
-#                                  | names)                                             |
-#                                  | Examplelist:"pingaccess pingfederate pingdelegator |
-#                                  | pingaccess-was              "                      |
+# EXTERNAL_INGRESS_ENABLED         | List of ping apps(pingdelegator pingfederate)      | No defaults
+#                                  | for which you can enable external ingress (the     |
+#                                  | values are ping app names)                         |
+#                                  |                                                    |
+#                                  | Examplelist:"pingfederate pingdelegator"           |
+#                                  |                                                    |
 #                                  |                                                    |
 # GLOBAL_TENANT_DOMAIN             | Region-independent URL used for DNS failover/      | Replaces the first segment of
 #                                  | routing.                                           | the TENANT_DOMAIN value with the
@@ -1526,32 +1526,6 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
     yq eval -i '.configMapGenerator += (load(strenv(CHUB_REGION_KUST_FILE)).configMapGenerator[] | select(.name == "argocd-bootstrap"))' "${PRIMARY_PING_KUST_FILE}"
     yq eval -i '.configMapGenerator += (load(strenv(CHUB_REGION_KUST_FILE)).configMapGenerator[] | select(.name == "p14c-environment-variables"))' "${PRIMARY_PING_KUST_FILE}"
 
-    # Keep argocd-ingress for Beluga environments by replacing the delete patches
-    # shellcheck disable=SC2016
-    export argocd_ingress_patch="
-- target:
-    # Argo CD ingress via pingaccess-was for Beluga Environments
-    group: networking.k8s.io
-    version: v1
-    kind: Ingress
-    name: argocd-ingress
-  patch: |-
-    - op: replace
-      path: /metadata/annotations/self-service.metadata.pingidentity.com~1displayURL
-      value: "https://argocd.${DNS_ZONE}/"
-    - op: replace
-      path: /spec/tls/0/hosts/0
-      value: argocd.${DNS_ZONE}
-    - op: replace
-      path: /spec/rules/0/host
-      value: argocd.${DNS_ZONE}
-"
-    K8S_CONFIGS_PA_WAS_ENGINE_KUSTOMIZE_FILE="${K8S_CONFIGS_DIR}/base/ping-cloud/pingaccess-was/engine/kustomization.yaml"
-    # Append patch to keep argocd-ingress for Beluga environments
-    yq eval -i '.patchesJson6902 += env(argocd_ingress_patch)' "${K8S_CONFIGS_PA_WAS_ENGINE_KUSTOMIZE_FILE}"
-    # remove delete patch for argocd-ingress
-    yq -i 'select(.metadata.name != "argocd-ingress")' "${K8S_CONFIGS_DIR}/base/ping-cloud/pingaccess-was/engine/remove-unneeded-ingresses.yaml"
-
     # Append the secrets from customer-hub to the CDE secrets, except PingCentral since that doesn't exist in the CDE
     printf "\n# %%%% NOTE: Below secrets are for the Developer CDE only (when IS_BELUGA_ENV is 'true') to make sure Argo works properly %%%%#\n" >> "${K8S_CONFIGS_DIR}/base/secrets.yaml"
     yq 'del(select(.metadata.name | contains("pingcentral")))' "${CHUB_TEMPLATES_DIR}/base/secrets.yaml" >> "${K8S_CONFIGS_DIR}/base/secrets.yaml"
@@ -1561,7 +1535,7 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   echo "Substituting env vars, this may take some time..."
   substitute_vars "${ENV_DIR}" "${REPO_VARS}" secrets.yaml env_vars
 
-  # Regional enablement - add admins, backups, etc. to primary and adding pingaccess-was and pingcentral to primary.
+  # Regional enablement - add admins, backups, etc. to primary and adding and pingcentral to primary.
   if test "${TENANT_DOMAIN}" = "${PRIMARY_TENANT_DOMAIN}"; then
     sed -i.bak 's/^\(.*remove-from-secondary-patch.yaml\)$/# \1/g' "${PRIMARY_PING_KUST_FILE}"
     rm -f "${PRIMARY_PING_KUST_FILE}.bak"
@@ -1616,8 +1590,8 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   done
 
   if test "${ENV}" = "${CUSTOMER_HUB}"; then
-    echo "CHUB deploy identified, retaining only PingCentral and PingAccess profiles"
-    # Retain only the pingcentral & pingaccess profiles
+    echo "CHUB deploy identified, retaining only PingCentral profile"
+    # Retain only the pingcentral profile
     find "${ENV_PROFILES_DIR}" -type d -mindepth 1 -maxdepth 1 -not -name "${PING_CENTRAL}" -exec rm -rf {} +
 
     if test "${TENANT_DOMAIN}" = "${PRIMARY_TENANT_DOMAIN}"; then

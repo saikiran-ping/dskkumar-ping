@@ -28,7 +28,6 @@ variables:
   SHARED_CI_SCRIPTS_DIR: "/ci-scripts"
   # 01-test-ocsp-stapling.sh causes other failures due to NGINX restart - ticket to fix is PDO-8100
   BRANCH_SKIP_TESTS: >
-    pingaccess/08-artifact-test.sh
     pingdelegator/01-admin-user-login.sh
     ingress-nginx/01-test-ocsp-stapling.sh
 
