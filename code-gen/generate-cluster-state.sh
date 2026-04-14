@@ -115,11 +115,11 @@
 # ENVIRONMENTS                     | The environments the customer is entitled to. This | dev test stage prod customer-hub
 #                                  | will be a subset of SUPPORTED_ENVIRONMENT_TYPES    |
 #                                  |                                                    |
-# EXTERNAL_INGRESS_ENABLED         | List of ping apps(pingdelegator pingfederate)      | No defaults
+# EXTERNAL_INGRESS_ENABLED         | List of ping apps(pingdelegator)      | No defaults
 #                                  | for which you can enable external ingress (the     |
 #                                  | values are ping app names)                         |
 #                                  |                                                    |
-#                                  | Examplelist:"pingfederate pingdelegator"           |
+#                                  | Examplelist:"pingdelegator"           |
 #                                  |                                                    |
 #                                  |                                                    |
 # GLOBAL_TENANT_DOMAIN             | Region-independent URL used for DNS failover/      | Replaces the first segment of
@@ -1126,6 +1126,7 @@ export USER_BASE_DN_2="${USER_BASE_DN_2}"
 export USER_BASE_DN_3="${USER_BASE_DN_3}"
 export USER_BASE_DN_4="${USER_BASE_DN_4}"
 export USER_BASE_DN_5="${USER_BASE_DN_5}"
+export PA_WAS_GCOPTION='-XX:+UseParallelGC'
 
 export APP_RESYNC_SECONDS="${APP_RESYNC_SECONDS:-60}"
 
@@ -1370,6 +1371,7 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   # TODO: With https://pingidentity.atlassian.net/browse/PP-6073 we should see all of the IRSA roles represented like
   # ArgoCD, then we can change this IRSA SSM fetch code to be consistent
   # shellcheck disable=SC2016
+    # Update the product specific variables based on environment.
   IRSA_TEMPLATE='eks.amazonaws.com/role-arn: ${ssm_value}'
   set_var "IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE" "" "${ACCOUNT_BASE_PATH}" "${ENV}/irsa-role/cert-manager/arn" "${IRSA_TEMPLATE}"
   set_var "IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE" "" "${ACCOUNT_BASE_PATH}" "${ENV}/irsa-role/external-dns/arn" "${IRSA_TEMPLATE}"
