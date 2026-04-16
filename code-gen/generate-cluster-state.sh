@@ -1260,7 +1260,7 @@ BOOTSTRAP_DIR="${TARGET_DIR}/${BOOTSTRAP_SHORT_DIR}"
 CLUSTER_STATE_REPO_DIR="${TARGET_DIR}/cluster-state"
 PROFILE_REPO_DIR="${TARGET_DIR}/profile-repo"
 PROFILES_DIR="${PROFILE_REPO_DIR}/profiles"
-PROFILE_REPO_MIRRORS=("p1as-pingdirectory p1as-pingfederate")
+PROFILE_REPO_MIRRORS=("p1as-pingdirectory p1as-pingfederate p1as-pingaccess")
 
 
 CUSTOMER_HUB='customer-hub'
@@ -1595,6 +1595,10 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   done
 
   if test "${ENV}" = "${CUSTOMER_HUB}"; then
+    echo "CHUB deploy identified, retaining only PingCentral and PingAccess profiles"
+    # Retain only the pingcentral & pingaccess profiles
+    find "${ENV_PROFILES_DIR}" -type d -mindepth 1 -maxdepth 1 -not -name "${PING_CENTRAL}" -not -name "${PING_ACCESS}" -exec rm -rf {} +
+
     echo "CHUB deploy identified, retaining only PingCentral profile"
     # Retain only the pingcentral profile
     find "${ENV_PROFILES_DIR}" -type d -mindepth 1 -maxdepth 1 -not -name "${PING_CENTRAL}" -exec rm -rf {} +
