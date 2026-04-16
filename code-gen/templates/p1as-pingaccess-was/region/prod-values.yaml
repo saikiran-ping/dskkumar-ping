@@ -17,13 +17,7 @@ pingaccessWas:
         requests:
           memory: "3Gi"
           cpu: "2"
-      upgradeResources:
-        limits:
-          memory: "6Gi"
-          cpu: "2"
-        requests:
-          memory: "6Gi"
-          cpu: "2"
+
 
 
   # Application settings that is only for pingaccess Engine
