@@ -87,7 +87,17 @@ global:
       pfClusterAuthPassword: ""
 
       # Optional license key for PingFederate
-      # pingFederateLicense:    
+      # pingFederateLicense:
+
+      ###### PingAccess Secrets #####
+
+      oldPaAdminUserPassword: MkFjY2Vzcw==
+
+      ####PingAccess-was Secrets ####
+      #oldPaAdminUserPassword: MkFjY2Vzcw==
+
+
+
   ########################################################
   # Multi-region parameters
   ########################################################
@@ -258,6 +268,8 @@ global:
     image: public.ecr.aws/r2h3l6e4/pingcloud-services/p14c-integration/dev:v2.3-release-branch-latest
   grpRadiusProxy:
     image: public.ecr.aws/r2h3l6e4/pingcloud-services/grp-radiusproxy/dev:v2.3-release-branch-latest
+
+
 
 
 
