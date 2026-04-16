@@ -1,8 +1,6 @@
 # pingaccess application settings that are shared with both pingaccess Admin and Engine
 pingaccess:
   podReaperEnabled: true
-  paAdminApiBasicAuthEnabled: false
-  javaOpts: "-javaagent:/opt/staging/jmx_prometheus_javaagent-0.14.0.jar=8080:/opt/in/instance/conf/jmx_export_config.yaml"
 
   license:
     # Only use if you want to provide your own SSM path to perpetual license
