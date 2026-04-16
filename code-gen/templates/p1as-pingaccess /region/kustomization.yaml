@@ -36,5 +36,3 @@ patchesStrategicMerge:
   - custom-patches.yaml
   - ../base/custom-patches.yaml  
 
-transformers:
-  - ../base/namespace.yaml

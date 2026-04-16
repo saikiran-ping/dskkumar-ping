@@ -1,5 +1,6 @@
 # pingaccess application settings that are shared with both pingaccess Admin and Engine
 pingaccess:
+  irsaPaAnnotationKeyValue: "${IRSA_PA_ANNOTATION_KEY_VALUE}"
   podReaperEnabled: true
 
   license:
@@ -9,6 +10,7 @@ pingaccess:
 
   admin:
     # PingAccess Heap
+    verbose: "false"
     paMinHeap: "1024m"
     paMaxHeap: "1024m"
     paMinYgen: "512m"
