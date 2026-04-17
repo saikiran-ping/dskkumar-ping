@@ -49,7 +49,11 @@ global:
       # Default Admin User Password for PingCentral
       pcAdminUserPassword: MkZlZGVyYXRlTTByZQ==
       # Default Admin User Password for PingAccess
+      oldPaAdminUserPassword: MkFjY2Vzcw==
       paAdminUserPassword: MkZlZGVyYXRlTTByZQ==
+      # Default Admin User Password for PingAccess-WAS
+      oldPaWasAdminUserPassword: MkFjY2Vzcw==
+      paWasAdminUserPassword: MkZlZGVyYXRlTTByZQ==
       
       ###### PingDirectory Secrets #####
 
@@ -90,22 +94,12 @@ global:
       # pingFederateLicense:
 
       ###### PingAccess Secrets #####
+      # Optional license key for PingAccess
+      # pingAccessLicense:
 
-      oldPaAdminUserPassword: MkFjY2Vzcw==
-      pingAccessLicense:
-        sealedsecrets.bitnami.com/managed: "true"
-        argocd.argoproj.io/sync-options: Prune=false
-
-
-      ####PingAccess-was Secrets ####
-      #oldPaAdminUserPassword: MkFjY2Vzcw==
-      name: pingaccessWasPasswords
-      annotations:
-        sealedsecrets.bitnami.com/managed: "true"
-        argocd.argoproj.io/sync-options: Prune=false
-
-
-
+      #### PingAccess-WAS Secrets ####
+      # Optional license key for PingAccess-WAS
+      # pingaccessWasLicense:
 
   ########################################################
   # Multi-region parameters
