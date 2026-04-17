@@ -92,15 +92,14 @@ global:
       ###### PingAccess Secrets #####
 
       oldPaAdminUserPassword: MkFjY2Vzcw==
-      name: pingaccess-license
-      annotations:
+      pingAccessLicense:
         sealedsecrets.bitnami.com/managed: "true"
         argocd.argoproj.io/sync-options: Prune=false
 
 
       ####PingAccess-was Secrets ####
       #oldPaAdminUserPassword: MkFjY2Vzcw==
-      name: pingaccess-was-passwords
+      name: pingaccessWasPasswords
       annotations:
         sealedsecrets.bitnami.com/managed: "true"
         argocd.argoproj.io/sync-options: Prune=false
