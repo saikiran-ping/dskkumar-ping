@@ -49,7 +49,11 @@ global:
       # Default Admin User Password for PingCentral
       pcAdminUserPassword: MkZlZGVyYXRlTTByZQ==
       # Default Admin User Password for PingAccess
+      oldPaAdminUserPassword: MkFjY2Vzcw==
       paAdminUserPassword: MkZlZGVyYXRlTTByZQ==
+      # Default Admin User Password for PingAccess-WAS
+      oldPaWasAdminUserPassword: MkFjY2Vzcw==
+      paWasAdminUserPassword: MkZlZGVyYXRlTTByZQ==
 
       ###### PingDirectory Secrets #####
 
@@ -90,17 +94,12 @@ global:
       # pingFederateLicense:
 
       ###### PingAccess Secrets #####
-      # Default Old Admin User Password for PingAccess
-      oldPaAdminUserPassword: MkFjY2Vzcw==
       # Optional license key for PingAccess
-      # pingaccessLicense :
+      # pingAccessLicense:
 
       #### PingAccess-WAS Secrets ####
       # Optional license key for PingAccess-WAS
       # pingaccessWasLicense:
-      # Default Admin User Password for PingAccess-WAS
-      oldPaWasAdminUserPassword: MkFjY2Vzcw==
-      paWasAdminUserPassword: MkZlZGVyYXRlTTByZQ==
 
   ########################################################
   # Multi-region parameters
@@ -207,8 +206,8 @@ global:
   ########################################################
   # Shared Application Variables
   ########################################################
-  # Define the contents for your descriptor.json file here, in yaml. An example is provided below for syntax.  
-  # Also see the descriptor.json.readme file in p1as-pingdirectory/deploy/templates/config directory of the 
+  # Define the contents for your descriptor.json file here, in yaml. An example is provided below for syntax.
+  # Also see the descriptor.json.readme file in p1as-pingdirectory/deploy/templates/config directory of the
   # p1as-pingdirectory repo for more info
   # descriptorFile: |-
   #   us-west-2:
