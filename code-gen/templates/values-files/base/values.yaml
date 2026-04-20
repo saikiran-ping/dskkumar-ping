@@ -101,35 +101,6 @@ global:
       # Optional license key for PingAccess-WAS
       # pingaccessWasLicense:
 
-      # Merge all env_vars into PingAccess environment variables configmaps
-    - name: pingaccess-admin-environment-variables
-      behavior: merge
-      envs:
-        - ../base/env_vars
-        - env_vars
-        - pingaccess/admin/env_vars
-
-        - name: pingaccess-environment-variables
-          behavior: merge
-          envs:
-            - ../base/env_vars
-            - env_vars
-            - pingaccess/engine/env_vars
-        # Merge all env_vars into PingAccess WAS environment variables configmaps
-        - name: pingaccess-was-admin-environment-variables
-          behavior: merge
-          envs:
-            - ../base/env_vars
-            - env_vars
-            - pingaccess-was/admin/env_vars
-
-        - name: pingaccess-was-environment-variables
-          behavior: merge
-          envs:
-            - ../base/env_vars
-            - env_vars
-            - pingaccess-was/engine/env_vars
-
   ########################################################
   # Multi-region parameters
   ########################################################
