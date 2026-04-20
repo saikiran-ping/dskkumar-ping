@@ -49,12 +49,8 @@ global:
       # Default Admin User Password for PingCentral
       pcAdminUserPassword: MkZlZGVyYXRlTTByZQ==
       # Default Admin User Password for PingAccess
-      oldPaAdminUserPassword: MkFjY2Vzcw==
       paAdminUserPassword: MkZlZGVyYXRlTTByZQ==
-      # Default Admin User Password for PingAccess-WAS
-      oldPaWasAdminUserPassword: MkFjY2Vzcw==
-      paWasAdminUserPassword: MkZlZGVyYXRlTTByZQ==
-      
+
       ###### PingDirectory Secrets #####
 
       # Mounted as a file on PD container and used for dsreplication commands
@@ -94,12 +90,17 @@ global:
       # pingFederateLicense:
 
       ###### PingAccess Secrets #####
+      # Default Old Admin User Password for PingAccess
+      oldPaAdminUserPassword: MkFjY2Vzcw==
       # Optional license key for PingAccess
-      # pingAccessLicense:
+      # pingaccessLicense :
 
       #### PingAccess-WAS Secrets ####
       # Optional license key for PingAccess-WAS
       # pingaccessWasLicense:
+      # Default Admin User Password for PingAccess-WAS
+      oldPaWasAdminUserPassword: MkFjY2Vzcw==
+      paWasAdminUserPassword: MkZlZGVyYXRlTTByZQ==
 
   ########################################################
   # Multi-region parameters
@@ -273,8 +274,3 @@ global:
     image: public.ecr.aws/r2h3l6e4/pingcloud-services/p14c-integration/dev:v2.3-release-branch-latest
   grpRadiusProxy:
     image: public.ecr.aws/r2h3l6e4/pingcloud-services/grp-radiusproxy/dev:v2.3-release-branch-latest
-
-
-
-
-
