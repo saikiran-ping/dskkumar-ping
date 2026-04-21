@@ -23,7 +23,7 @@ configMapGenerator:
     literals:
       - UPDATE_REASON=""
   ### This is needed for the empty custom-patches.yaml file to work ###
-  - name: pingaccess-was-custom-placeholder
+  - name: pingaccess-was-custom-placeholder-base
   ### This is needed for the empty custom-patches.yaml file to work in base folder ###
   - name: pingaccess-custom-placeholder-base
 

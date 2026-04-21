@@ -19,7 +19,6 @@ pingaccess:
 
     restore:
       backupFileName: ""
-      restoreBackup: "true"
 
     statefulSet:
       lastUpdateReason: "NA"

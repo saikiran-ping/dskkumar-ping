@@ -1375,7 +1375,6 @@ for ENV_OR_BRANCH in ${SUPPORTED_ENVIRONMENT_TYPES}; do
   # TODO: With https://pingidentity.atlassian.net/browse/PP-6073 we should see all of the IRSA roles represented like
   # ArgoCD, then we can change this IRSA SSM fetch code to be consistent
   # shellcheck disable=SC2016
-  # Update the product specific variables based on environment.
   IRSA_TEMPLATE='eks.amazonaws.com/role-arn: ${ssm_value}'
   set_var "IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE" "" "${ACCOUNT_BASE_PATH}" "${ENV}/irsa-role/cert-manager/arn" "${IRSA_TEMPLATE}"
   set_var "IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE" "" "${ACCOUNT_BASE_PATH}" "${ENV}/irsa-role/external-dns/arn" "${IRSA_TEMPLATE}"
