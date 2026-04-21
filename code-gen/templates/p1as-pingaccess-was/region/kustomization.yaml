@@ -23,9 +23,9 @@ configMapGenerator:
     literals:
       - UPDATE_REASON=""
   ### This is needed for the empty custom-patches.yaml file to work ###
-  - name: pingaccess-was-custom-placeholder-base
+  - name: pingaccess-was-custom-placeholder
   ### This is needed for the empty custom-patches.yaml file to work in base folder ###
-  - name: pingaccess-custom-placeholder-base
+  - name: pingaccess-was-custom-placeholder-base
 
 patchesStrategicMerge:
   ### PS/GSO customizations to OOTB resources should only go into this file. Otherwise, CSR auto-updates will break. ###
